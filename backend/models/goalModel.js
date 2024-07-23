@@ -1,20 +1,18 @@
-const moongose=require('mongoose')
+const mongoose = require('mongoose');
 
-const goalSchema = moongose.Schema(
+const goalSchema = mongoose.Schema(
   {
     user: {
-      type: moongose.Schema.Types.ObjectId,
-      required:true,
-      ref:'User',
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'User',
     },
-    text:{
+    text: {
       type: String,
-      required:[true,'Please add a text value']
+      required: [true, 'Please add a text field'],
     },
   },
-  {
-    timestamps: true,
-  }
-)
+  { timestamps: true }
+);
 
-module.exports = moongose.model('Goal',goalSchema)
+module.exports = mongoose.model('Goal', goalSchema);
