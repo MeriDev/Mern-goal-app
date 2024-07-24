@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { reset } from 'colors';
+
+import authService from './authService';
+
 const user = JSON.parse(localStorage.getItem('user'));
 
 const initialState = {
@@ -10,6 +12,28 @@ const initialState = {
   message: '',
 };
 
+//Register user
+export const register = createAsyncThunk(
+  'auth/register',
+  async (user, thunkAPI) => {
+    try {
+      return await authService.register(user);
+    } catch (err) {
+      const message =
+        (err.response && err.response.data && err.response.data.message) ||
+        err.message ||
+        err.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+//logout
+export const logout = createAsyncThunk('auth/logout', async () => {
+  await authService.logout();
+});
+
+//*Reducer
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -21,7 +45,22 @@ export const authSlice = createSlice({
       state.message = '';
     },
   },
-  extraReducers: () => {},
+  extraReducers: builder => {
+    builder
+      .addCase(register.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = action.payload;
+      })
+      .addCase(register.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      });
+  },
 });
 
 export const { reset } = authSlice.actions;

@@ -13,9 +13,7 @@ function Login() {
   });
   const { email, password } = formData;
 
-  const {
-    onChangeHandler,
-  } = e => {
+  const onChangeHandler = e => {
     setFormData(prevState => ({
       ...prevState,
       [e.target.name]: e.target.value,
