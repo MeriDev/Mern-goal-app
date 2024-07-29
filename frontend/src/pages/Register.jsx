@@ -8,7 +8,7 @@ import { register, reset } from '../features/auth/authSlice';
 
 import Spinner from '../components/Spinner';
 
-function Register() {
+const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -46,6 +46,7 @@ function Register() {
 
   const onSubmitHandler = e => {
     e.preventDefault();
+
     if (password !== password2) {
       toast.error('Passwords do not match');
     } else {
@@ -127,6 +128,6 @@ function Register() {
       </section>
     </>
   );
-}
+};
 
 export default Register;
