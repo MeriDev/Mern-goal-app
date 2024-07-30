@@ -1,20 +1,18 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { createGoal } from '../features/goals/goalSlice';
-import Spinner from './Spinner';
 
 const GoalForm = () => {
   const dispatch = useDispatch();
-
-  // const { isLoading } = useSelector(state => state.goals);
 
   const [text, setText] = useState('');
 
   const submitHandler = e => {
     e.preventDefault();
 
-    dispatch(createGoal(text));
+    dispatch(createGoal({ text }));
+    setText('');
   };
 
   return (
