@@ -41,10 +41,27 @@ const deleteGoal = async (goalId, token) => {
   return response.data;
 };
 
+//Edit goals
+// Create new goal
+const editGoal = async (goalId, newGoal, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.put(API_URL + goalId, { text: newGoal }, config);
+  console.log(newGoal);
+  console.log(response);
+
+  return response.data;
+};
+
 const goalServices = {
   createGoal,
   getGoals,
   deleteGoal,
+  editGoal,
 };
 
 export default goalServices;
